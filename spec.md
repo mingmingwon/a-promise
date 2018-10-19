@@ -1,4 +1,4 @@
-本文翻译基于 [Promises/A+ 官网原文](https://promisesaplus.com/) 和自己的理解，其格式和 [Github 原文](https://github.com/promises-aplus/promises-spec) 略有不同。若有纰漏还望指出。
+本文翻译基于 [Promises/A+ 官网原文](https://promisesaplus.com/) 和自己的理解，其格式和 [Github 地址原文](https://github.com/promises-aplus/promises-spec) 略有不同。若有纰漏还望指出。
 
 [![Promises/A+](https://promisesaplus.com/assets/logo-small.png "Promises/A+")](https://promisesaplus.com/)
 
@@ -8,7 +8,7 @@
 
 本规范详细定义了 **`then`** 方法的行为，给所有遵循 `promise/A+` 实现规范的方案提供了一份实现基础。因此，本规范是非常稳定的。然而 *`Promises/A+`* 组织可能会为解决一些新发现的边界情况，对本规范进行微小的向后兼容修正，但是只有经过仔细考虑、讨论和测试，我们才会加入较大的、不兼容的改动。
 
-从历史上看，`Promises/A+` 澄清了早期  [`Promises/A`](http://wiki.commonjs.org/wiki/Promises/A)  建议的行为条款，并扩展它以覆盖 *`事实上`* 的行为，移除其中未指定或有问题的部分。
+从历史上看，`Promises/A+` 澄清了早期  [`Promises/A`](http://wiki.commonjs.org/wiki/Promises/A)  建议的行为条款，并扩展它以覆盖 **事实上** 的行为，移除其中未指定或有问题的部分。
 
 最后，核心 `Promises/A+` 规范并不处理如何创建、实现或拒绝 *`promises`*，而是专注于提供一种可交互操作的 **`then`** 方法。未来和规范相关的工作可能会涉及这些主题。
 
@@ -162,6 +162,6 @@ promise2 = promise1.then(onFulfilled, onRejected)
 
 - <a id="3.4">3.4</a> 通常来讲，只有当 **`x`** 是从当前实现中定义出来的，我们才知道它是一个真正的 *`promise`* 对象。这条规则使得使用特定实现的方法可以接收符合规范的 *`promises`* 的状态。
 
-- <a id="3.5">3.5</a> 这一步骤中，首先存储一个指向 **`x.then`** 的引用，然后检测该引用，之后再调用该引用，避免 **`x.then`** 属性多次被访问调用。这些预防措施对于确保访问器属性的一致性非常重要，因为其值可能在多次取值期间发生变化。
+- <a id="3.5">3.5</a> 在此步骤中，首先存储一个指向 **`x.then`** 的引用，然后检测该引用，之后再调用该引用，避免 **`x.then`** 属性多次被访问调用。这些预防措施对于确保访问器属性的一致性非常重要，因为其值可能在多次取值期间发生变化。
 
-- <a id="3.6">3.6</a> 本规范的实现 `不应该` 限定 *`thenable chains`* 的深度，假设超出任意限定，递归将是无限的。只有真正的循环才会导致 **`TypeError`**；如果遇到一条长度无限且 *`thenable`* 对象均不相同链，则无限递归就是正确的行为。
+- <a id="3.6">3.6</a> 本规范的实现 **不应该** 限定 *`thenable chains`* 的深度，假设超出任意限定，递归将是无限的。只有真正的循环才会导致 **`TypeError`**；如果遇到一条长度无限且 *`thenable`* 对象均不相同链，则无限递归就是正确的行为。
