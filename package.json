@@ -1,0 +1,21 @@
+{
+  "name": "promise-a",
+  "version": "0.0.1",
+  "description": "An implementation of Promises/A+ using ES6, including CN specification, and compliance test",
+  "main": "promise.js",
+  "scripts": {
+    "test": "promises-aplus-tests ./promise.js"
+  },
+  "keywords": [
+    "Promise",
+    "Promises/A+",
+    "Promises/A+ specification",
+    "Promises/A+ implementation",
+    "Promises/A+ compliance test"
+  ],
+  "author": "Jordan Wang",
+  "license": "MIT",
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
