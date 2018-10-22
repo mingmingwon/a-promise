@@ -1,10 +1,11 @@
 {
-  "name": "promise-a",
-  "version": "0.0.1",
-  "description": "An implementation of Promises/A+ using ES6, including CN specification, and compliance test",
+  "name": "a-promise",
+  "version": "0.0.2",
+  "description": "An implementation of Promises/A+ using ES6, and Chinese specification of Promises/A+",
   "main": "promise.js",
   "scripts": {
-    "test": "promises-aplus-tests ./promise.js"
+    "test": "promises-aplus-tests ./promise.js",
+    "lint": "eslint ./promise.js"
   },
   "keywords": [
     "Promise",
@@ -16,6 +17,12 @@
   "author": "Jordan Wang",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^5.7.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "promises-aplus-tests": "^2.1.2"
   }
 }
