@@ -1,11 +1,3 @@
-<style>
-  * {
-    font-family: Consolas, 'Courier New', monospace;
-    font-size: 15px;
-    line-height: 1.8
-  }
-</style>
-
 <a href="http://promisesaplus.com/">
   <img src="http://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ Logo" title="Promises/A+" align="right" width="75px" />
 </a>
