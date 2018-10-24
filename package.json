@@ -1,6 +1,6 @@
 {
   "name": "a-promise",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "An implementation of Promises/A+ using ES6, and Chinese specification of Promises/A+",
   "main": "promise.js",
   "scripts": {
@@ -8,11 +8,14 @@
     "lint": "eslint ./promise.js"
   },
   "keywords": [
-    "Promise",
+    "promise",
+    "promises-aplus",
+    "promise-library",
+    "promise-specification",
+    "promise-implementation",
     "Promises/A+",
     "Promises/A+ specification",
-    "Promises/A+ implementation",
-    "Promises/A+ compliance test"
+    "Promises/A+ implementation"
   ],
   "author": "Jordan Wang",
   "license": "MIT",

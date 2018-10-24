@@ -1,17 +1,30 @@
+/**
+ * Keep variable names same as Promises/A+ spec as possible
+ */
+
 const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
 
+// promise belongs micro-task, it's more like process.nextTick
+// rather than macro-task setImmediate and setTimeout
+let nextTick = setTimeout
+if (typeof process === 'object' && typeof process.nextTick === 'function') {
+  nextTick = process.nextTick
+} else if (typeof setImmediate === 'function') {
+  nextTick = setImmediate
+}
+
 class Promise {
-  constructor (func) {
+  constructor (executor) {
     this.status = PENDING
     this.value = null
     this.reason = null
-    this.onFulfilledArr = []
-    this.onRejectedArr = []
+    this.onFulfilleds = []
+    this.onRejecteds = []
 
     try {
-      func(this.resolve.bind(this), this.reject.bind(this))
+      executor(this.resolve.bind(this), this.reject.bind(this))
     } catch (reason) {
       this.reject(reason)
     }
@@ -22,9 +35,11 @@ class Promise {
       this.status = FULFILLED
       this.value = value
 
-      this.onFulfilledArr.forEach(onFulfilled => {
-        onFulfilled(this.value)
-      })
+      nextTick(() => { // ensure execute asynchronously
+        this.onFulfilleds.forEach(onFulfilled => {
+          onFulfilled(this.value)
+        })
+      }, 0)
     }
   }
 
@@ -33,9 +48,11 @@ class Promise {
       this.status = REJECTED
       this.reason = reason
 
-      this.onRejectedArr.forEach(onRejected => {
-        onRejected(this.reason)
-      })
+      nextTick(() => { // ensure execute asynchronously
+        this.onRejecteds.forEach(onRejected => {
+          onRejected(this.reason)
+        })
+      }, 0)
     }
   }
 
@@ -43,35 +60,31 @@ class Promise {
     typeof onFulfilled === 'function' || (onFulfilled = value => value)
     typeof onRejected === 'function' || (onRejected = reason => { throw reason })
 
-    const promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve, reject) => {
       if (this.status === PENDING) {
-        this.onFulfilledArr.push(() => {
-          setTimeout(() => {
-            try {
-              const x = onFulfilled(this.value)
-              this.resolvePromise(promise, x, resolve, reject)
-            } catch (reason) {
-              reject(reason)
-            }
-          }, 0)
+        this.onFulfilleds.push(value => {
+          try {
+            let x = onFulfilled(value)
+            Promise.resolvePromise(promise, x, resolve, reject)
+          } catch (reason) {
+            reject(reason)
+          }
         })
-        this.onRejectedArr.push(() => {
-          setTimeout(() => {
-            try {
-              const x = onRejected(this.reason)
-              this.resolvePromise(promise, x, resolve, reject)
-            } catch (reason) {
-              reject(reason)
-            }
-          }, 0)
+        this.onRejecteds.push(reason => {
+          try {
+            let x = onRejected(reason)
+            Promise.resolvePromise(promise, x, resolve, reject)
+          } catch (reason) {
+            reject(reason)
+          }
         })
       }
 
       if (this.status === FULFILLED) {
-        setTimeout(() => {
+        nextTick(() => {
           try {
-            const x = onFulfilled(this.value)
-            this.resolvePromise(promise, x, resolve, reject)
+            let x = onFulfilled(this.value)
+            Promise.resolvePromise(promise, x, resolve, reject)
           } catch (reason) {
             reject(reason)
           }
@@ -79,10 +92,10 @@ class Promise {
       }
 
       if (this.status === REJECTED) {
-        setTimeout(() => {
+        nextTick(() => {
           try {
-            const x = onRejected(this.reason)
-            this.resolvePromise(promise, x, resolve, reject)
+            let x = onRejected(this.reason)
+            Promise.resolvePromise(promise, x, resolve, reject)
           } catch (reason) {
             reject(reason)
           }
@@ -97,14 +110,30 @@ class Promise {
     return this.then(undefined, onRejected)
   }
 
-  resolvePromise (promise, x, resolve, reject) {
+  finally (fn) {
+    return this.then(res => {
+      fn.call(this, res)
+      return res
+    }, err => {
+      fn.call(this, err)
+      return err
+    })
+  }
+
+  done (fn) {
+    this.catch(err => {
+      throw err
+    })
+  }
+
+  static resolvePromise (promise, x, resolve, reject) {
     let called = false
 
     if (promise === x) {
-      return reject(new TypeError('circular reference'))
+      return reject(new TypeError('Circular reference'))
     }
 
-    const xType = Object.prototype.toString.call(x)
+    let xType = Object.prototype.toString.call(x)
     if (xType === '[object Object]' || xType === '[object Function]') {
       try {
         let then = x.then
@@ -112,7 +141,7 @@ class Promise {
           then.call(x, y => {
             if (called) return
             called = true
-            this.resolvePromise(promise, y, resolve, reject)
+            Promise.resolvePromise(promise, y, resolve, reject)
           }, r => {
             if (called) return
             called = true
@@ -134,12 +163,60 @@ class Promise {
   }
 
   static deferred () {
-    const dfd = {}
+    let dfd = {}
     dfd.promise = new Promise((resolve, reject) => {
       dfd.resolve = resolve
       dfd.reject = reject
     })
     return dfd
+  }
+
+  static resolve (value) {
+    let promise
+    promise = new Promise((resolve, reject) => {
+      Promise.resolvePromise(promise, value, resolve, reject)
+    })
+    return promise
+  }
+
+  static reject (reason) {
+    return new Promise((resolve, reject) => {
+      reject(reason)
+    })
+  }
+
+  static all (promises) {
+    if (!Array.isArray(promises)) {
+      throw new TypeError('Argument is not iterable')
+    }
+
+    return new Promise((resolve, reject) => {
+      let result = []
+      let count = 0
+      promises.forEach((promise, index) => {
+        promise.then(res => {
+          result[index] = res
+          count++
+          if (count === promises.length) {
+            resolve(result)
+          }
+        }, reject)
+      })
+    })
+  }
+
+  static race (promises) {
+    if (!Array.isArray(promises)) {
+      throw new TypeError('Argument is not iterable')
+    }
+
+    return new Promise((resolve, reject) => {
+      promises.forEach(promise => {
+        promise.then(res => {
+          resolve(res)
+        }, reject)
+      })
+    })
   }
 }
 

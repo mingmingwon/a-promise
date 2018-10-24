@@ -1,6 +1,16 @@
-本文翻译基于 [Promises/A+ 官网原文](https://promisesaplus.com/)，其格式和 [Github 地址原文](https://github.com/promises-aplus/promises-spec) 略有不同。若有纰漏还望指出。
+<style>
+  * {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 15px;
+    line-height: 1.8
+  }
+</style>
 
-[![Promises/A+](https://promisesaplus.com/assets/logo-small.png "Promises/A+")](https://promisesaplus.com/)
+<a href="http://promisesaplus.com/">
+  <img src="http://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ Logo" title="Promises/A+" align="right" width="75px" />
+</a>
+
+本文翻译基于 [Promises/A+ 官网原文](https://promisesaplus.com/)，其格式和 [Github 地址原文](https://github.com/promises-aplus/promises-spec) 略有不同。若有纰漏还望指出。
 
 **一份通用可交互操作的 JavaScript promises 开放标准，由实现者制定，供实现者参考。**
 
@@ -56,7 +66,7 @@
 
 *`promise`* 对象的 **`then`** 方法接收两个参数：
 
-```
+```js
 promise.then(onFulfilled, onRejected)
 ```
 
@@ -94,7 +104,7 @@ promise.then(onFulfilled, onRejected)
 
 2.2.7 **`then`** 方法必须返回一个 *`promise`* 对象 [[3.3](#3.3)]。
 
-```
+```js
 promise2 = promise1.then(onFulfilled, onRejected)
 ```
 
