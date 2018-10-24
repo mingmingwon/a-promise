@@ -2,6 +2,8 @@
   <img src="http://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ Logo" title="Promises/A+" align="right" width="70px" />
 </a>
 
+![npm](https://img.shields.io/npm/v/a-promise-lib.svg) ![npm](https://img.shields.io/npm/dt/a-promise-lib.svg) ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+
 # Introduction
 
 An implementation of [Promises/A+](http://promisesaplus.com/) using ES6, and [Chinese specification](https://github.com/mingmingwon/a-promise-lib/blob/master/spec_cn.md) of Promises/A+.
@@ -62,7 +64,6 @@ will see the result like this:
 ```bash
 872 passing (17s)
 ```
-
 
 # License
 

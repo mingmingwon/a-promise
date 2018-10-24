@@ -7,6 +7,10 @@
     "test": "promises-aplus-tests ./promise.js",
     "lint": "eslint ./promise.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mingmingwon/a-promise-lib.git"
+  },
   "keywords": [
     "promise",
     "promises-aplus",
@@ -19,6 +23,10 @@
   ],
   "author": "Jordan Wang",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mingmingwon/a-promise-lib/issues"
+  },
+  "homepage": "https://github.com/mingmingwon/a-promise-lib#readme",
   "devDependencies": {
     "eslint": "^5.7.0",
     "eslint-config-standard": "^12.0.0",
