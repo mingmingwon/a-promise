@@ -1,21 +1,21 @@
 <a href="http://promisesaplus.com/">
-  <img src="http://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ Logo" title="Promises/A+" align="right" width="75px" />
+  <img src="http://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ Logo" title="Promises/A+" align="right" width="70px" />
 </a>
 
 # Introduction
 
-An implementation of [Promises/A+](http://promisesaplus.com/) using ES6, and [Chinese specification](https://github.com/mingmingwon/a-promise/blob/master/spec_cn.md) of Promises/A+.
+An implementation of [Promises/A+](http://promisesaplus.com/) using ES6, and [Chinese specification](https://github.com/mingmingwon/a-promise-lib/blob/master/spec_cn.md) of Promises/A+.
 
 # Install
-[![NPM](https://nodei.co/npm/a-promise.png)](https://nodei.co/npm/a-promise/)
+[![NPM](https://nodei.co/npm/a-promise-lib.png)](https://nodei.co/npm/a-promise-lib/)
 
 ```node
-npm i a-promise
+npm i a-promise-lib
 ```
 # Usage
 
 ```js
-let Promise = require('a-promise')
+let Promise = require('a-promise-lib')
 
 let promise = new Promise((resolve, reject) => {
   setTimeout(resolve, 1000, 'Success')

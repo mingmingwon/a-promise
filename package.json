@@ -1,8 +1,8 @@
 {
-  "name": "a-promise",
+  "name": "a-promise-lib",
   "version": "0.0.1",
   "description": "An implementation of Promises/A+ using ES6, and Chinese specification of Promises/A+",
-  "main": "promise.js",
+  "main": "./promise.js",
   "scripts": {
     "test": "promises-aplus-tests ./promise.js",
     "lint": "eslint ./promise.js"
