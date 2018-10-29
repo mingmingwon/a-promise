@@ -2,7 +2,7 @@
   <img src="http://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ Logo" title="Promises/A+" align="right" width="70px" />
 </a>
 
-![npm](https://img.shields.io/npm/v/a-promise-lib.svg) ![npm](https://img.shields.io/npm/dt/a-promise-lib.svg) ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+[![npm](https://img.shields.io/npm/v/a-promise-lib.svg)](https://www.npmjs.com/package/a-promise-lib) [![npm](https://img.shields.io/npm/dt/a-promise-lib.svg)](https://www.npmjs.com/package/a-promise-lib) [![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mingmingwon/a-promise-lib/blob/master/LICENSE) 
 
 # Introduction
 
@@ -59,7 +59,7 @@ Refer to [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/p
 npm run test
 ```
 
-will see the result like this:
+Result like this:
 
 ```bash
 872 passing (17s)
@@ -67,4 +67,4 @@ will see the result like this:
 
 # License
 
-The MIT License (MIT)
+The MIT License
